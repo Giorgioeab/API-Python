@@ -10,6 +10,11 @@ app = FastAPI()
 # Cria as tabelas no banco de dados
 Livros.metadata.create_all(bind=engine)
 
+@app.get('/')
+def saudacao():
+    return ('Sistema de gerenciamento de livros')
+
+
 @app.post("/livros/", response_model=LivrosResponse)
 def create_livro(livro: LivrosCreate, db: Session = Depends(get_db)):
     return LivroCore.create_book(db, Livros(**livro.dict()))
